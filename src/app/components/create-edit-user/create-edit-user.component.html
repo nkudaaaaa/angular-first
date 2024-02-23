@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>{{ data.isEdit ? 'Edit UserInterface' : 'Create UserInterface' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="userForm">
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="company" placeholder="company">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="street" placeholder="street">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="website" placeholder="website">
+    </mat-form-field>
+      <button mat-raised-button color="primary" (click)="saveUser()" style="margin-left: 60px;">
+        {{ data.isEdit ? 'Save' : 'Create' }}
+      </button>
+  </form>
+</mat-dialog-content>

@@ -1,0 +1,12 @@
+<div class="card" (click)="onEdit()">
+  <div class="card__left">
+    <h2>{{ user.name }}</h2>
+    <hr style="margin-bottom: 15px;">
+    <p>{{ "Company: " + user.company.name }}</p>
+    <p>{{ "Street: " + user.address.street }}</p>
+    <p>{{ "Website: " + user.website }}</p>
+  </div>
+  <div class="buttons">
+    <button mat-raised-button color="primary" (click)="deleteUser()">Delete</button>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+.users-list {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.button-open-modal {
+  background: rgb(67,80,175);
+  border: none;
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  color: aliceblue;
+  font-size: 22px;
+  transition: .2s ease-in-out;
+}
+.button-open-modal {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgb(67,80,175);
+  border: none;
+  border-radius: 50px;
+  width: 30px;
+  color: aliceblue;
+  transform: scale(1.2);
+  font-size: 22px;
+  transition: .2s ease-in-out;
+}
+.button-open-modal:hover {
+  transform: scale(1.3);
+}
+
+
+h1 {
+  padding: 3rem;
+}
