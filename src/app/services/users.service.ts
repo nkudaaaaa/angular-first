@@ -14,8 +14,8 @@ export class UsersService {
   private initialLength: number = 0;
 
   constructor(private api: UsersApiService) {
-    const storedUsers = this.loadUsersFromLocalStorage();
-    if (storedUsers && storedUsers.length > 0) {
+    const storedUsers: UserInterface[] | null = this.loadUsersFromLocalStorage();
+    if (storedUsers && storedUsers.length) {
       this.usersSubject$.next(storedUsers);
     } else {
       this.loadUsers();
@@ -39,13 +39,13 @@ export class UsersService {
     this.updateLocalStorage();
   }
 
-  addUser(newUserInfo: UserInterface) {
+  addUser(newUserInfo: UserInterface): void {
     this.usersSubject$.next([...this.usersSubject$.value, newUserInfo]);
     this.updateLocalStorage();
   }
 
-  editUser(userInfo: UserInterface) {
-    const updatedUsers = this.usersSubject$.value.map(user => {
+  editUser(userInfo: UserInterface): void {
+    const updatedUsers: UserInterface[] = this.usersSubject$.value.map(user => {
       if (user.id === userInfo.id) {
         return userInfo;
       }

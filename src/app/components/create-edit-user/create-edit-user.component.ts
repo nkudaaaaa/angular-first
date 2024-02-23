@@ -58,7 +58,7 @@ export class CreateEditUserComponent {
     }
   }
 
-  saveUser() {
+  saveUser(): void {
     const userData = this.userForm.value;
     this.dialogRef.close(userData)
   }
