@@ -34,23 +34,13 @@ export class CreateEditUserComponent {
     @Inject(MAT_DIALOG_DATA) public data: { isEdit: boolean, userInfo: UserInterface },
     private dialogRef: MatDialogRef<CreateEditUserComponent>
   ) {
-    if (data.userInfo) {
       this.userForm = this.fb.group({
-        id: data.userInfo.id,
-        name: data.userInfo.name,
-        company: data.userInfo.company.name,
-        street: data.userInfo.address.street,
-        website: data.userInfo.website
+        id: data.userInfo.id || 0,
+        name: data.userInfo.name || [''],
+        company: data.userInfo.company.name || [''],
+        street: data.userInfo.address.street || [''],
+        website: data.userInfo.website || ['']
       });
-    } else {
-      this.userForm = this.fb.group({
-        id: 0,
-        name: [''],
-        company: [''],
-        street: [''],
-        website: ['']
-      });
-    }
 
     this.isEdit = this.data.isEdit
     if (this.data && this.data.userInfo?.name) {
