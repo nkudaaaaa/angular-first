@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {UsersService} from "../../services/users.service";
 import {CreateEditUserComponent} from "../create-edit-user/create-edit-user.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
-import {UserInterface} from "../../interfaces/user.interface";
+import {User} from "../../interfaces/user.interface";
 import {UserCardComponent} from "../user-card/user-card.component";
 import {AsyncPipe} from "@angular/common";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-users-list',
@@ -18,43 +19,33 @@ import {AsyncPipe} from "@angular/common";
   ],
   styleUrls: ['./users-list.component.scss']
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent {
 
-  constructor(protected usersService: UsersService, private dialog: MatDialog) {}
-  openCreateEditUserDialog(isEdit: boolean, user?: UserInterface): void {
-    const userInfo: UserInterface | null = user ? {
-      id: user.id,
-      name: user.name,
-      address: {street: user.address.street},
-      website: user.website,
-      company: {name: user.company.name},
-    } : null;
+  constructor(public usersService: UsersService, private dialog: MatDialog) {
+    this.usersService.loadUsers()
+  }
+
+  openCreateEditUserDialog(isEdit: boolean, user?: User): void {
+    const userInfo = user // без переменной почему-то всегда undefined передается
     const dialogRef = this.dialog.open(CreateEditUserComponent, {
       width: '265px',
       data: {isEdit, userInfo}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const data: UserInterface = {
-          id: result.id,
-          name: result.name,
-          address: {street: result.street},
-          company: {name: result.company},
-          website: result.website
+    dialogRef.afterClosed().pipe(
+      tap(result => {
+        if (result) {
+          const data: User = {
+            ...result,
+            address: {street: result.street},
+            company: {name: result.company}
+          }
+          isEdit ? this.usersService.editUser(data) : this.usersService.addUser(data);
         }
-        isEdit ? this.usersService.editUser(data) : this.usersService.addUser(data);
-      }
-    });
-  }
-
-
-  ngOnInit(): void {
-    this.usersService.loadUsersFromLocalStorage()
+      })).subscribe();
   }
 
   deleteUser(userId: number): void {
     this.usersService.deleteUser(userId);
   }
-
 }

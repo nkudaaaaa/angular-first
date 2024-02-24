@@ -4,7 +4,7 @@ import {
   MAT_DIALOG_DATA, MatDialogActions, MatDialogContent,
   MatDialogRef, MatDialogTitle,
 } from "@angular/material/dialog";
-import {UserInterface} from "../../interfaces/user.interface";
+import {User} from "../../interfaces/user.interface";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
@@ -31,25 +31,22 @@ export class CreateEditUserComponent {
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: { isEdit: boolean, userInfo: UserInterface },
+    @Inject(MAT_DIALOG_DATA) public data: { isEdit: boolean, userInfo?: User },
     private dialogRef: MatDialogRef<CreateEditUserComponent>
   ) {
-      this.userForm = this.fb.group({
-        id: data.userInfo.id || 0,
-        name: data.userInfo.name || [''],
-        company: data.userInfo.company.name || [''],
-        street: data.userInfo.address.street || [''],
-        website: data.userInfo.website || ['']
-      });
+    console.log(data.userInfo+'qqqqaqaq')
+    this.userForm = this.fb.group({
+      id: data.userInfo?.id || 0,
+      name: data.userInfo?.name || '',
+      company: data.userInfo?.company.name || '',
+      street: data.userInfo?.address.street || '',
+      website: data.userInfo?.website || ''
+    });
 
     this.isEdit = this.data.isEdit
-    if (this.data && this.data.userInfo?.name) {
-      this.userForm.patchValue(this.data);
-    }
   }
 
   saveUser(): void {
-    const userData = this.userForm.value;
-    this.dialogRef.close(userData)
+    this.dialogRef.close(this.userForm.value)
   }
 }

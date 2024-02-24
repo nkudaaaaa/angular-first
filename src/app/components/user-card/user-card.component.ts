@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserInterface} from "../../interfaces/user.interface";
+import {User} from "../../interfaces/user.interface";
 import {MatButton} from "@angular/material/button";
 
 @Component({
@@ -15,17 +15,17 @@ export class UserCardComponent {
   constructor() {
   }
 
-  @Input() user!: UserInterface
+  @Input({required: true}) user!: User
 
-  @Output() onEdited: EventEmitter<number> = new EventEmitter<number>();
-  @Output() deleteUserEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onEdited = new EventEmitter<number>();
+  @Output() deleteUserEvent = new EventEmitter<number>();
 
-  deleteUser(): void {
-    this.deleteUserEvent.emit(this.user.id);
+  deleteUser(id: number): void {
+    this.deleteUserEvent.emit(id);
   }
 
-  onEdit(): void {
-    this.onEdited.emit(this.user.id)
+  onEdit(id: number): void {
+    this.onEdited.emit(id)
   }
 
 }
