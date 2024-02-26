@@ -1,13 +1,18 @@
 <div class="users-list-main">
-  <div class="users-list">
-    @for (user of usersService.users$ | async; track user) {
-      <app-user-card [user]="user" (deleteUserEvent)="deleteUser($event)"
-                     (onEdited)="openCreateEditUserDialog(true, user)"></app-user-card>
-    }
-  </div>
-  <button class="button-open-modal" style="height: 30px;" (click)="openCreateEditUserDialog(false)">+</button>
+  @if ((this.status$ | async) === 'loading') {
+    <h1>Loading...</h1>
+  } @else {
+    <div class="users-list">
+      @for (user of this.users$ | async; track user) {
+        <app-user-card [user]="user" (deleteUserEvent)="deleteUser($event)"
+                       (onEdited)="openCreateEditUserDialog(user)"></app-user-card>
+      }
+    </div>
+    <button class="button-open-modal" style="height: 30px;" (click)="openCreateEditUserDialog()">+</button>
 
-  @if ((usersService.users$ | async )!.length === 0) {
+    @if ((this.users$ | async)!.length === 0) {
       <h1>No Items(((</h1>
+    }
   }
+
 </div>

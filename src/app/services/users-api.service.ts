@@ -9,8 +9,10 @@ import {User} from "../interfaces/user.interface";
 export class UsersApiService {
   constructor(private http: HttpClient) {
   }
+
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>('https://jsonplaceholder.typicode.com/users')
-      .pipe(retry(2))
+    return this.http.get<User[]>('https://jsonplaceholder.typicode.com/users').pipe(
+      retry(2)
+    )
   }
 }

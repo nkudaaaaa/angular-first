@@ -34,7 +34,6 @@ export class CreateEditUserComponent {
     @Inject(MAT_DIALOG_DATA) public data: { isEdit: boolean, userInfo?: User },
     private dialogRef: MatDialogRef<CreateEditUserComponent>
   ) {
-    console.log(data.userInfo+'qqqqaqaq')
     this.userForm = this.fb.group({
       id: data.userInfo?.id || 0,
       name: data.userInfo?.name || '',
