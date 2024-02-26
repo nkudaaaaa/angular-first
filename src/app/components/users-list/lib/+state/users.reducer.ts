@@ -37,7 +37,6 @@ export const usersFeature = createFeature({
         error: error.message
       }
     }),
-
     on(usersActions.addUserSuccess, (state, {newUser}) => {
       const lastUserId = state.users.length > 0 ? state.users[state.users.length - 1].id : 0;
       const updatedUser = {...newUser, id: lastUserId + 1};
@@ -50,7 +49,6 @@ export const usersFeature = createFeature({
         error: error.message
       }
     }),
-
     on(usersActions.updateUserSuccess, (state, {userInfo}) => {
       const updatedUsers: User[] = state.users.map(user => {
         if (user.id === userInfo.id) {
@@ -67,7 +65,6 @@ export const usersFeature = createFeature({
         error: error.message
       }
     }),
-
     on(usersActions.deleteUserSuccess, (state, {id}) => ({
       ...state,
       users: state.users.filter(user => user.id !== id)
